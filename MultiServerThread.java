@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.util.Random;
 
 public class MultiServerThread extends Thread{
   private static final String TAG = "MultiServerThread";
@@ -31,7 +32,12 @@ public class MultiServerThread extends Thread{
       out.println(PING);
 
       while (in.readLine().equals(PONG)) {
-          out.println(PING);
+        try {
+          sleep(getRandomSleepTime());
+        }catch (InterruptedException e) {
+          break;
+        }
+        out.println(PING);
       }
     } catch(Exception e) {
 
@@ -43,6 +49,12 @@ public class MultiServerThread extends Thread{
           System.err.println(TAG+": Error closing socket");
         }
     }
+  }
+
+  private Long getRandomSleepTime(){
+    Random random = new Random();
+    int time = random.nextInt(1000)+1000;
+    return (long) time;
   }
 
 }
