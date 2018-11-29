@@ -25,8 +25,7 @@ public class MultiServer extends Thread{
       onServerBoundListener.onServerBound(getHostAddress(),serverSocket.getLocalPort());
 
       while (true) {
-        serverSocket.accept();
-
+        new ServerThread(serverSocket.accept()).start();
       }
     } catch (SocketTimeoutException e) {
 
