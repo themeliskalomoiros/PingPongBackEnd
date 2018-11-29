@@ -8,12 +8,12 @@ import java.net.SocketTimeoutException;
 
 public class Server extends Thread{
 
-  public interface OnServerUpListener{
-    void onServerUp(String host, int port);
-    void onServerUpFailure(IOException e);
+  public interface OnServerBoundListener{
+    void onServerBound(String host, int port);
+    void onServerBoundFailure(IOException e);
   }
 
-  private OnServerUpListener onServerUpListener;
+  private OnServerBoundListener onServerBoundListener;
   private ServerSocket serverSocket;
 
   @Override
@@ -24,13 +24,13 @@ public class Server extends Thread{
         Socket clientSocket = serverSocket.accept();
       }
     } catch (SocketTimeoutException e) {
-      
+
     } catch(IOException e) {
 
     }
   }
 
-  public void setOnServerUpListener(OnServerUpListener listener){
-    onServerUpListener = listener;
+  public void setOnServerBoundListener(final OnServerBoundListener listener){
+    onServerBoundListener = listener;
   }
 }
