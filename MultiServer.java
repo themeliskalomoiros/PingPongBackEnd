@@ -18,6 +18,10 @@ public class MultiServer extends Thread{
   private OnServerBoundListener onServerBoundListener;
   private ServerSocket serverSocket;
 
+  public MultiServer(){
+    super("MultiServer");
+  }
+
   @Override
   public void run(){
     try {
