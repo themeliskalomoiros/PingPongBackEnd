@@ -17,7 +17,11 @@ public class Server extends Thread{
 
   @Override
   public void run(){
+    try {
+      serverSocket = new ServerSocket(0);
+    } catch(IOException e) {
 
+    }
   }
 
   public void setOnServerUpListener(OnServerUpListener listener){
