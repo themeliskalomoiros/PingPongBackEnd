@@ -8,6 +8,8 @@ import java.net.SocketTimeoutException;
 
 public class Server extends Thread{
 
+  public static final int INVALID_PORT = -1;
+
   public interface OnServerBoundListener{
     void onServerBound(String host, int port);
     void onServerBoundFailure(IOException e);
@@ -20,6 +22,8 @@ public class Server extends Thread{
   public void run(){
     try {
       serverSocket = new ServerSocket(0);
+      onServerBoundListener.onServerBound(getHostAddress(),serverSocket.getLocalPort());
+
       while (true) {
         Socket clientSocket = serverSocket.accept();
       }
@@ -32,5 +36,12 @@ public class Server extends Thread{
 
   public void setOnServerBoundListener(final OnServerBoundListener listener){
     onServerBoundListener = listener;
+  }
+
+  private String getHostAddress(){
+    if (serverSocket!=null) {
+      return serverSocket.getInetAddress().getHostAddress();
+    }
+    return null;
   }
 }
