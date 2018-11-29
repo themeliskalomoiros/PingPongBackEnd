@@ -7,7 +7,7 @@ import java.net.SocketTimeoutException;
 // A multiclient server which pings and gets ponged!
 
 public class MultiServer extends Thread{
-
+  private static final String TAG = "MultiServer";
   public static final int INVALID_PORT = -1;
 
   public interface OnServerBoundListener{
@@ -31,10 +31,16 @@ public class MultiServer extends Thread{
       while (true) {
         new MultiServerThread(serverSocket.accept()).start();
       }
-    } catch (SocketTimeoutException e) {
-
     } catch(IOException e) {
-
+      System.err.println(TAG+": "+e.getMessage());
+    }finally{
+      if (serverSocket!=null) {
+        try {
+          serverSocket.close();
+        } catch(Exception e) {
+          System.err.println(TAG+": Error closing server socket!");
+        }
+      }
     }
   }
 
