@@ -1,4 +1,4 @@
-package gr.skemelio.ping_pong;
+package com.skemelio.ping_pong;
 
 import java.net.Socket;
 import java.io.PrintWriter;
@@ -33,11 +33,12 @@ public class MultiServerThread extends Thread{
 
       while (in.readLine().equals(PONG)) {
         try {
+          System.out.println(TAG+": ponged!");
           sleep(getRandomSleepTime());
+          out.println(PING);
         }catch (InterruptedException e) {
           break;
         }
-        out.println(PING);
       }
     } catch(Exception e) {
 

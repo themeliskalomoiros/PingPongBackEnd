@@ -1,4 +1,4 @@
-package gr.skemelio.ping_pong;
+package com.skemelio.ping_pong;
 
 import java.io.IOException;
 
@@ -27,6 +27,6 @@ public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
     System.out.println("*******************************");
     System.out.println("********* Ping/Pong ***********");
     System.out.println("********* Welcome! ************");
-    System.out.println("*******************************");
+    System.out.println("*******************************\n");
   }
 }
