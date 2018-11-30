@@ -4,17 +4,24 @@ import java.io.IOException;
 
 public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
 
+  private MultiServer server;
+
   public static void main(String[] args) {
     PingPongBackendApp application = new PingPongBackendApp();
     application.printWelcome();
-
-    MultiServer server = new MultiServer();
-    server.setOnServerBoundListener(application);
-    server.start();
+    startMultiServer();
 
     System.out.println("Type \"exit\" to shutdown the server.");
     while(!System.console().readLine().equalsIgnoreCase("exit")){
       System.out.println("Type \"exit\" to shutdown the server.");
+    }
+  }
+
+  private void startMultiServer(){
+    if (server == null) {
+      server = new MultiServer();
+      server.setOnServerBoundListener(application);
+      server.start();
     }
   }
 

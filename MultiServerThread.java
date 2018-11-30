@@ -30,9 +30,15 @@ public class MultiServerThread extends Thread{
 
       // Server starts with a ping
       out.println(PING);
+      System.out.println(TAG+": Just pinged client!");
 
-      while (in.readLine().equals(PONG)) {
+      while (true) {
         try {
+          String clientResponse = in.readLine();
+          System.out.println(TAG+" read client response ("+clientResponse+")");
+          if (!clientResponse.equals(PONG))
+            break;
+
           System.out.println(TAG+": ponged!");
           sleep(getRandomSleepTime());
           out.println(PING);
