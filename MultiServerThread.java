@@ -34,7 +34,6 @@ public class MultiServerThread extends Thread{
 
       while (true) {
           String clientResponse = in.readLine();
-          System.out.println("Debug..."+TAG+": response was "+clientResponse);
           if (clientResponse == null || !clientResponse.equals(PONG)){
             System.out.println(TAG+" client does not want to play anymore... :(");
             break;
