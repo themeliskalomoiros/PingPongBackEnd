@@ -21,17 +21,21 @@ public class MultiServer extends Thread{
 
   private OnServerBoundListener onServerBoundListener;
   private ServerSocket serverSocket;
+  private int port = INVALID_PORT;
 
   public MultiServer(){
     super("MultiServer");
   }
 
+  public MultiServer(int port){
+    this();
+    this.port = port;
+  }
+
   @Override
   public void run(){
     try {
-      serverSocket = new ServerSocket(0);
-      onServerBoundListener.onServerBound(getHostAddress(),serverSocket.getLocalPort());
-
+      initializeServerSocket();
       while (true) {
         MultiServerThread thread = new MultiServerThread(serverSocket.accept());
         System.out.println(TAG+": Accepted client");
@@ -43,6 +47,15 @@ public class MultiServer extends Thread{
     }finally{
       closeServerSocket();
     }
+  }
+
+  private void initializeServerSocket() throws IOException{
+    if (port == INVALID_PORT){
+      serverSocket = new ServerSocket(0);
+    }else{
+      serverSocket = new ServerSocket(port);
+    }
+    onServerBoundListener.onServerBound(getHostAddress(),serverSocket.getLocalPort());
   }
 
   public void setOnServerBoundListener(final OnServerBoundListener listener){
