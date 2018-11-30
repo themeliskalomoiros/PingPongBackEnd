@@ -39,6 +39,11 @@ public class MultiServerThread extends Thread{
             break;
           }
           System.out.println(TAG+": ponged!");
+          try {
+            Thread.sleep(getRandomSleepTime());
+          } catch(InterruptedException e) {
+            System.err.println(TAG+": "+toString()+" was interrupted while sleeping.");
+          }
           out.println(PING);
           System.out.println(TAG+": pinged back! ;)");
       }
