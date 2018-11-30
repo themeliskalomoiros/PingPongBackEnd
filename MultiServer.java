@@ -3,12 +3,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.util.List;
+import java.util.ArrayList;
 
 // A multiclient server which pings and gets ponged!
 
 public class MultiServer extends Thread{
   private static final String TAG = "MultiServer";
   public static final int INVALID_PORT = -1;
+
+  private List<MultiServerThread> threads = new ArrayList<>();
 
   public interface OnServerBoundListener{
     void onServerBound(String host, int port);
@@ -29,8 +33,10 @@ public class MultiServer extends Thread{
       onServerBoundListener.onServerBound(getHostAddress(),serverSocket.getLocalPort());
 
       while (true) {
-        new MultiServerThread(serverSocket.accept()).start();
+        MultiServerThread thread = new MultiServerThread(serverSocket.accept());
         System.out.println(TAG+": Accepted client");
+        thread.start();
+        threads.add(thread);
       }
     } catch(IOException e) {
       System.err.println(TAG+": "+e.getMessage());
@@ -54,5 +60,11 @@ public class MultiServer extends Thread{
       return serverSocket.getInetAddress().getHostAddress();
     }
     return null;
+  }
+
+  private void shutdown(){
+    for (MultiServerThread thread : threads) {
+      thread.shutdown();
+    }
   }
 }

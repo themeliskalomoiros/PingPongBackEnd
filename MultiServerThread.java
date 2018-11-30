@@ -30,26 +30,20 @@ public class MultiServerThread extends Thread{
 
       // Server starts with a ping
       out.println(PING);
-      System.out.println(TAG+": Just pinged client!");
+      System.out.println(TAG+": Pinged client for the first time!");
 
-      while (true) {
-          String clientResponse = in.readLine();
-          if (clientResponse == null || !clientResponse.equals(PONG)){
-            System.out.println(TAG+" client does not want to play anymore... :(");
-            break;
-          }
+      String clientResponse;
+      while ((clientResponse = in.readLine()).equals(PONG)) {
           System.out.println(TAG+": ponged!");
-          try {
-            Thread.sleep(getRandomSleepTime());
-          } catch(InterruptedException e) {
-            System.err.println(TAG+": "+toString()+" was interrupted while sleeping.");
-          }
+          pauseForTwoSecondsMax();
           out.println(PING);
           System.out.println(TAG+": pinged back! ;)");
       }
     } catch (IOException e) {
       System.err.println(TAG+": "+e.getMessage());
-    } finally{
+    } catch (NullPointerException e) {
+      System.out.println(TAG+": client disconnected.");
+    }finally{
         shutdown();
     }
 }
@@ -60,13 +54,21 @@ public class MultiServerThread extends Thread{
     return (long) time;
   }
 
-  private void shutdown(){
+  public void shutdown(){
     if(socket != null){
       try {
         socket.close();
       } catch(IOException e) {
         System.err.println(TAG+": Error closing socket");
       }
+    }
+  }
+
+  private void pauseForTwoSecondsMax(){
+    try {
+      Thread.sleep(getRandomSleepTime());
+    } catch(InterruptedException e) {
+      System.err.println(TAG+": "+toString()+" was interrupted while sleeping.");
     }
   }
 
