@@ -13,6 +13,8 @@ public class MultiServerThread extends Thread{
   private static final String PONG = "PONG";
 
   private Socket socket;
+  private PrintWriter out;
+  private BufferedReader in;
 
   public MultiServerThread(Socket socket){
     this.socket = socket;
@@ -25,8 +27,8 @@ public class MultiServerThread extends Thread{
   @Override
   public void run(){
     try {
-      PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
-      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      out = new PrintWriter(socket.getOutputStream(),true);
+      in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
       // Server starts with a ping
       out.println(PING);
@@ -55,7 +57,10 @@ public class MultiServerThread extends Thread{
   }
 
   public void shutdown(){
-    if(socket != null){
+    if (out != null) {
+      out.close();
+    }
+    if(in != null){
       try {
         socket.close();
       } catch(IOException e) {
