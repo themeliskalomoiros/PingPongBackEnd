@@ -30,6 +30,7 @@ public class MultiServer extends Thread{
 
       while (true) {
         new MultiServerThread(serverSocket.accept()).start();
+        System.out.println(TAG+": Accepted client");
       }
     } catch(IOException e) {
       System.err.println(TAG+": "+e.getMessage());

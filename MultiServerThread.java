@@ -25,7 +25,7 @@ public class MultiServerThread extends Thread{
   @Override
   public void run(){
     try {
-      PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+      PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
       BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
       // Server starts with a ping
@@ -33,30 +33,28 @@ public class MultiServerThread extends Thread{
       System.out.println(TAG+": Just pinged client!");
 
       while (true) {
-        try {
           String clientResponse = in.readLine();
-          System.out.println(TAG+" read client response ("+clientResponse+")");
-          if (!clientResponse.equals(PONG))
+          System.out.println("Debug..."+TAG+": response was "+clientResponse);
+          if (clientResponse == null || !clientResponse.equals(PONG)){
+            System.out.println(TAG+" client does not want to play anymore... :(");
             break;
-
+          }
           System.out.println(TAG+": ponged!");
-          sleep(getRandomSleepTime());
           out.println(PING);
-        }catch (InterruptedException e) {
-          break;
-        }
+          System.out.println(TAG+": pinged back! ;)");
       }
-    } catch(Exception e) {
-
-    }finally{
-      if(socket != null)
-        try {
-          socket.close();
-        } catch(IOException e) {
-          System.err.println(TAG+": Error closing socket");
+    } catch (IOException e) {
+      System.err.println(TAG+": "+e.getMessage());
+    } finally{
+        if(socket != null){
+          try {
+            socket.close();
+          } catch(IOException e) {
+            System.err.println(TAG+": Error closing socket");
+          }
         }
     }
-  }
+}
 
   private Long getRandomSleepTime(){
     Random random = new Random();
