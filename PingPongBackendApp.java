@@ -3,24 +3,19 @@ package com.skemelio.ping_pong;
 import java.io.IOException;
 
 public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
-
   private MultiServer server;
 
   public static void main(String[] args) {
     PingPongBackendApp application = new PingPongBackendApp();
     application.printWelcome();
-    startMultiServer();
-
-    System.out.println("Type \"exit\" to shutdown the server.");
-    while(!System.console().readLine().equalsIgnoreCase("exit")){
-      System.out.println("Type \"exit\" to shutdown the server.");
-    }
+    application.startMultiServer();
+    application.waitForUserToExit();
   }
 
   private void startMultiServer(){
     if (server == null) {
       server = new MultiServer();
-      server.setOnServerBoundListener(application);
+      server.setOnServerBoundListener(this);
       server.start();
     }
   }
@@ -33,6 +28,14 @@ public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
   @Override
   public void onServerBoundFailure(IOException e){
     System.out.println(e.getMessage());
+  }
+
+  private void waitForUserToExit(){
+    System.out.println("Reminder: You need to type \"exit\" if you wish to shutdown the server and close the application.");
+    while(!System.console().readLine().equalsIgnoreCase("exit")){
+      System.out.println("Type \"exit\".");
+    }
+    System.exit(1);
   }
 
   private void printWelcome(){
