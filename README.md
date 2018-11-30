@@ -6,7 +6,7 @@ Upon server initialization the host name and the local port is printed,
 helping clients establishing a connection.
 
 The first interaction is made by the server which pings the client when it first gets connected. 
-Then it waits for a respond (a pong) from a client, which always responds back after a short period.
+Then it waits for a respond (a pong) from a client. When a client responds server responds back after a short period.
 
 User may **exit the program** typing ```exit``` and press enter.
 
