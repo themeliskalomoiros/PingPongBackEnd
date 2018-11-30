@@ -11,6 +11,11 @@ public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
     MultiServer server = new MultiServer();
     server.setOnServerBoundListener(application);
     server.start();
+
+    System.out.println("Type \"exit\" to shutdown the server.");
+    while(!System.console().readLine().equalsIgnoreCase("exit")){
+      System.out.println("Type \"exit\" to shutdown the server.");
+    }
   }
 
   @Override
