@@ -11,13 +11,26 @@ public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
   public static void main(String[] args) {
     PingPongBackendApp application = new PingPongBackendApp();
     application.printWelcome();
-    application.startMultiServer();
+    try {
+      int userDefinedPort = Integer.parseInt(args[0]);
+      application.startMultiServer(userDefinedPort);
+    } catch(Exception e) {
+      application.startMultiServer();
+    }
     application.waitForUserToExit();
   }
 
   private void startMultiServer(){
     if (server == null) {
       server = new MultiServer();
+      server.setOnServerBoundListener(this);
+      server.start();
+    }
+  }
+
+  private void startMultiServer(int port){
+    if (server == null) {
+      server = new MultiServer(port);
       server.setOnServerBoundListener(this);
       server.start();
     }
