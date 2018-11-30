@@ -1,4 +1,4 @@
-# PinngPongBackEnd Application
+# PingPongBackEnd Application
 
 An CLI application which accepts client connections and interacts with them. 
 
