@@ -17,7 +17,7 @@ This is a CLI application. Open your terminal, compile the application and execu
 ### Prerequisites
 
 - Java SDK installed on your machine.
-- A client to send pongs ([PingPongAndroidClient](https://github.com/tomasmichael995/PingPongAndroidClient) is an android app client).
+- A client to send pings ([PingPongAndroidClient](https://github.com/tomasmichael995/PingPongAndroidClient) is an android app client).
 - Server and client must connected to the same network.
 
 ### Known Issues
