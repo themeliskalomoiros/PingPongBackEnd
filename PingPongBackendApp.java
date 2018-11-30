@@ -3,6 +3,9 @@ package com.skemelio.ping_pong;
 import java.io.IOException;
 
 public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
+  private static final String TAG = "PingPongBackendApp";
+  private static final int WELCOME_MESSAGE_SIZE = 31;
+
   private MultiServer server;
 
   public static void main(String[] args) {
@@ -22,7 +25,7 @@ public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
 
   @Override
   public void onServerBound(String host, int port){
-    System.out.printf("A server bound succesfully!\nHost:\t%s\nPort:%d\t",host,port);
+    System.out.printf(TAG+": A server bound succesfully at\n\t\t\tHost:\t%s\n\t\t\tPort:%d\t",host,port);
   }
 
   @Override
@@ -31,17 +34,30 @@ public class PingPongBackendApp implements MultiServer.OnServerBoundListener{
   }
 
   private void waitForUserToExit(){
-    System.out.println("Reminder: You need to type \"exit\" if you wish to shutdown the server and close the application.");
+    System.out.println(TAG+": type \"exit\" if you wish to shutdown the server and close the application.");
     while(!System.console().readLine().equalsIgnoreCase("exit")){
-      System.out.println("Type \"exit\".");
+      System.out.println(TAG+": type \"exit\".");
     }
     System.exit(1);
   }
 
   private void printWelcome(){
-    System.out.println("*******************************");
+    printStarsWithDelay();
     System.out.println("********* Ping/Pong ***********");
     System.out.println("********* Welcome! ************");
-    System.out.println("*******************************\n");
+    printStarsWithDelay();
+    System.out.println();
+  }
+
+  private void printStarsWithDelay(){
+    for (int i=0; i<WELCOME_MESSAGE_SIZE; i++) {
+      System.out.print("*");
+      try {
+        Thread.sleep(30);
+      } catch(InterruptedException e) {
+        System.err.println(TAG+": error while sleep in printStarsWithDelay()");
+      }
+    }
+    System.out.println();
   }
 }
