@@ -50,13 +50,7 @@ public class MultiServerThread extends Thread{
     } catch (IOException e) {
       System.err.println(TAG+": "+e.getMessage());
     } finally{
-        if(socket != null){
-          try {
-            socket.close();
-          } catch(IOException e) {
-            System.err.println(TAG+": Error closing socket");
-          }
-        }
+        shutdown();
     }
 }
 
@@ -64,6 +58,16 @@ public class MultiServerThread extends Thread{
     Random random = new Random();
     int time = random.nextInt(1000)+1000;
     return (long) time;
+  }
+
+  private void shutdown(){
+    if(socket != null){
+      try {
+        socket.close();
+      } catch(IOException e) {
+        System.err.println(TAG+": Error closing socket");
+      }
+    }
   }
 
 }
