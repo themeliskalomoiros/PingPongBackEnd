@@ -41,13 +41,7 @@ public class MultiServer extends Thread{
     } catch(IOException e) {
       System.err.println(TAG+": "+e.getMessage());
     }finally{
-      if (serverSocket!=null) {
-        try {
-          serverSocket.close();
-        } catch(Exception e) {
-          System.err.println(TAG+": Error closing server socket!");
-        }
-      }
+      closeServerSocket();
     }
   }
 
@@ -62,9 +56,21 @@ public class MultiServer extends Thread{
     return null;
   }
 
-  private void shutdown(){
+  public void shutdown(){
+    closeServerSocket();
     for (MultiServerThread thread : threads) {
       thread.shutdown();
+    }
+  }
+
+  private void closeServerSocket(){
+    if (serverSocket!=null) {
+      try {
+        serverSocket.close();
+        serverSocket = null;
+      } catch(Exception e) {
+        System.err.println(TAG+": Error closing server socket!");
+      }
     }
   }
 }
