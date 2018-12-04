@@ -12,7 +12,15 @@ User may **exit the program** typing ```exit``` and press enter.
 
 ## Getting Started
 
-This is a CLI application. Open your terminal, compile the application and execute it.
+This is a CLI application. After you've cloned the repository open a terminal, compile and execute.
+
+### Compilation
+1. Navigate to the PingPongBackEnd repository by typing in the terminal ```cd <path_to_repository>```.
+2. Compile the *.java* files, ```javac -d <path_to_location_for_the_class_files> PingPongBackendApp.java```.
+
+### Execution
+To execute the program simply type the following command from anywhere```java com.skemelio.ping_pong.PingPongBackendApp``` if the *CLASSPATH* is set. 
+Otherwise navigate to the PingPongBackEnd repository (as specified above in step 1) and then use the same command.
 
 ### Prerequisites
 
